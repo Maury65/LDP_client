@@ -1,0 +1,6 @@
+.favIcon {
+    z-index: 99999;  
+    position: absolute;
+    right: 40px;
+    top: 40px;
+  }
