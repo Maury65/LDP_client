@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Params } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
-
+/***
+ * Servizio generico di comunicazione con i servizi rest esposti da spring boot
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +16,14 @@ export class GenericListDataService<T>  {
   constructor( private http: HttpClient  ) {
   }
 
+  /**
+   * Lettura dal servizio rest di una lista di dati
+   * @param url 
+   * @param paginator 
+   * @param sort 
+   * @param filterText 
+   * @param size 
+   */
   getList(url: string, paginator: MatPaginator, sort: MatSort, filterText: string, size = 30):  Observable<T> {
     const href = this.baseUrl + '/' + url ;
     let filterQuery = href.indexOf('?') >= 0 ? '' : '/?';
@@ -34,95 +44,47 @@ export class GenericListDataService<T>  {
     return this.http.get<T>(requestUrl);
   }
 
-}
-
-
-
-
-
 
    /**
-   * Restituisce una lista di oggetti ordinabile e paginabile
-
-  getListOrderedAndPagabledAdv(
-    listResourceName: string ,
-    page: number,
-    order: string,
-    sortDirection: string,
-    filterText: string = '',
-    adv: any = '',
-    size = 30,
-    queryParams?: Params
-  ):  Observable<T> {
-    const href = this.baseUrl + '/' + listResourceName + '/';
-    let filterQuery = '?';
-    if (filterText) {
-      filterQuery = '?text=' + filterText + '&';
-    }
-    let orderBy = '';
-    if (order) {
-      orderBy = '&sort=' + order;
-    }
-    let sortDirectionParam = '';
-    if (sortDirection) {
-      sortDirectionParam = '&sortDirection=' + sortDirection;
-    }
-    let advParam = '';
-    if (adv) {
-      advParam = '&adv=' + encodeURIComponent(JSON.stringify(adv));
-    }
-    if (queryParams && (queryParams.status || queryParams.onlyMy)) {
-      if (!adv) {
-        adv = {};
-      }
-      if (queryParams.status ) {
-        adv.stato = queryParams.status;
-      }
-      if (queryParams.onlyMy) {
-        adv.onlyMy = queryParams.onlyMy;
-      }
-      advParam = '&adv=' + encodeURIComponent(JSON.stringify(adv));
-    }
-
-    const requestUrl = `${href}${filterQuery}page=${page}&size=${size}` + advParam + orderBy + sortDirectionParam;
-    return this.http.get<T>(requestUrl);
-  }   */
-
-  /**
-   * Restituisce una lista di oggetti ordinabile e paginabile
-   * @param listResourceName
-
-  getListOrderedAndPagabled(
-    listResourceName: string ,
-    page: number,
-    order: string,
-    sortDirection: string,
-    filterText: string = '',
-    size = 30,
-    resourceName = listResourceName):  Observable<T> {
-const href = this.baseUrl + '/' + listResourceName ;
-let filterQuery = listResourceName.indexOf('?') >= 0 ? '&' : '/?';
-if (filterText) {
-filterQuery = 'search/search?text=' + filterText + '&';
-}
-let orderBy = '';
-if (order) {
-orderBy = '&sort=' + order  + ',' + sortDirection;
-}
-const requestUrl = `${href}${filterQuery}page=${page}&size=${size}` + orderBy;
-return this.http.get<T>(requestUrl);
-}
-
+   * Implementazione della chiamata GET ad un servizio Rest per id risorsa. 
+   * Restituscie un singolo oggetto di tipo T letto per id
+   * @param resourceName, nome della risorsa rest
+   * @param id, id della risorsa da leggere
    */
+  async getOneById(resourceName: string , id: any):  Promise<T> {
+    const url = this.baseUrl + '/' + resourceName + '/' + encodeURIComponent(id);
+    // console.debug(url);
+    return this.http.get(url).toPromise()
+    .then(response => {
+      return response.valueOf() as T;
+    });
+  }
 
-
-
-  /*
-    return this.http.get(this.baseUrl + '/' + listResourceName + '/')
+   /**
+   * Implementazione della chiamata post ad un servizio Rest. 
+   * Inserisce o modifica la risorsa di tipo T passata per argomento
+   * @param resourceName, nome della risorsa rest
+   * @param  resource, oggetto da inserire o modificare al server
+   */
+  async saveOrUpdate(resourceName: string, resource: T):  Promise<T> {
+    return this.http.post(this.baseUrl + '/' + resourceName + '/', resource)
       .toPromise()
       .then(response => {
-        // console.debug(response["_embedded"]);
-        return response['_embedded'][resourceName].valueOf() as T[];
-      })
-      .catch(error => this.handleError(error, this.popupService));
-    */
+        return response.valueOf() as T;
+      });
+  }
+
+ /**
+   * Implementazione della chiamata delete ad un servizio Rest. 
+   * Elimina la risorsa con l'id passata per argomento
+   * @param resourceName, nome della risorsa rest
+   * @param id, id della risorsa da eliminare
+   */
+  async delete(resourceName: string, id: string): Promise<boolean> {
+    return this.http.delete(this.baseUrl + '/' + resourceName + '/' + id)
+      .toPromise()
+      .then(response => {
+        return true;
+      });
+  }
+}

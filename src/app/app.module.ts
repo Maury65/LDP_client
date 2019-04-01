@@ -14,7 +14,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule } fro
     AppRoutingModule,
     HttpClientModule,
    
-    BrowserAnimationsModule,z
+    BrowserAnimationsModule,
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
@@ -38,7 +40,12 @@ import { MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule } fro
     MatIconModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

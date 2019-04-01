@@ -49,3 +49,7 @@
     right: 40px;
     top: 40px;
   }
+
+  .row{
+    cursor: pointer;
+  }
