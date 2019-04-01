@@ -30,7 +30,7 @@ import { MatPaginatorModule, MatSortModule, MatButtonModule, MatIconModule } fro
     AppRoutingModule,
     HttpClientModule,
    
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,z
     MatToolbarModule,
     MatMenuModule,
     MatTableModule,
