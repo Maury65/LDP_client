@@ -18,18 +18,21 @@ export class GenericListDataService<T>  {
 
   /**
    * Lettura dal servizio rest di una lista di dati
-   * @param url 
-   * @param paginator 
-   * @param sort 
-   * @param filterText 
-   * @param size 
+   * @param url
+   * @param paginator
+   * @param sort
+   * @param filterText
+   * @param size
    */
   getList(url: string, paginator: MatPaginator, sort: MatSort, filterText: string, size = 30):  Observable<T> {
-    const href = this.baseUrl + '/' + url ;
-    let filterQuery = href.indexOf('?') >= 0 ? '' : '/?';
+    const href = this.baseUrl + '/' + url  ;
+    const filterQuery = '/search/findByCodProgettoContainingOrNomePMContainingOrDescProgettoContaining?codProgetto=' +
+                    encodeURIComponent(filterText) + '&nomePM=' +
+                    encodeURIComponent(filterText) + '&descProgetto=' +
+                    encodeURIComponent(filterText);
     let orderBy = '';
     if (sort && sort.active) {
-      orderBy = '&sort=' + sort.active  + ',' + sort.direction ;
+      orderBy = '&sort=' + encodeURIComponent(sort.active  + ',' + sort.direction) ;
     }
     let page = '&page=0';
     if (paginator && paginator.pageIndex) {
@@ -41,12 +44,13 @@ export class GenericListDataService<T>  {
     }
 
     const requestUrl = `${href}${filterQuery}${page}${sizeFilter}${orderBy}`;
+    console.info('Get Resource:' + requestUrl);
     return this.http.get<T>(requestUrl);
   }
 
 
    /**
-   * Implementazione della chiamata GET ad un servizio Rest per id risorsa. 
+   * Implementazione della chiamata GET ad un servizio Rest per id risorsa.
    * Restituscie un singolo oggetto di tipo T letto per id
    * @param resourceName, nome della risorsa rest
    * @param id, id della risorsa da leggere
@@ -61,7 +65,7 @@ export class GenericListDataService<T>  {
   }
 
    /**
-   * Implementazione della chiamata post ad un servizio Rest. 
+   * Implementazione della chiamata post ad un servizio Rest.
    * Inserisce o modifica la risorsa di tipo T passata per argomento
    * @param resourceName, nome della risorsa rest
    * @param  resource, oggetto da inserire o modificare al server
@@ -75,12 +79,12 @@ export class GenericListDataService<T>  {
   }
 
  /**
-   * Implementazione della chiamata delete ad un servizio Rest. 
+   * Implementazione della chiamata delete ad un servizio Rest.
    * Elimina la risorsa con l'id passata per argomento
    * @param resourceName, nome della risorsa rest
    * @param id, id della risorsa da eliminare
    */
-  async delete(resourceName: string, id: string): Promise<boolean> {
+  async delete(resourceName: string, id: String): Promise<boolean> {
     return this.http.delete(this.baseUrl + '/' + resourceName + '/' + id)
       .toPromise()
       .then(response => {

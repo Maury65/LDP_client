@@ -1,20 +1,25 @@
 .favIcon {
-    z-index: 99999;  
-    position: absolute;
-    right: 40px;
-    top: 40px;
-  }
-
-  .full-width {
-    width: 100%;
-    padding-bottom: 10px;
-  }
-  .container {
-    width: 100%;
-    padding: 25px;
-  }
-  .actionLabel {
-    padding-right: 30px;
-    margin-top: 9px;
-    color: lightslategrey;
+  z-index: 99999;
+  position: absolute;
+  right: 40px;
+  top: 42px;
 }
+
+.full-width {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.container {
+  padding: 25px;
+}
+.actionLabel {
+  padding-right: 30px;
+  margin-top: 9px;
+  color: lightslategrey;
+}
+
+div[fxLayoutAlign] {
+  padding: 4px;
+}
+

@@ -1,0 +1,35 @@
+
+.searchText {
+  background-color: transparent;
+  border-color: transparent;
+  color: #333;
+  border: none;
+  border-radius: 100px;
+  background-color: #fafafa;
+  padding: 5px 16px;
+  margin-left: 8px;
+  width: 180px;
+  max-width: 240px;
+  height: 50%;
+  -webkit-appearance: none;
+  /*transition: width .4s ease-in-out;*/
+}
+.searchText:hover {
+  transition: width .4s ease-in-out;
+  transition-property: width;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+  transition-delay: initial;
+   /*transform: scale(1.5); (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.filterIcon {
+  float: right;
+  top: 4px;
+  right: 20px;
+  position: relative;
+  z-index: 2;
+  color: gray;
+  content: "\f007";
+  font-family: 'FontAwesome';
+}

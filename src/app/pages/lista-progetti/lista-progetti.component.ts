@@ -5,6 +5,7 @@ import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { Proj, ProjListItem } from 'src/app/model/il-progetto.model';
 import { GenericListDataService } from 'src/app/services/generic-list.service';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-lista-progetti',
@@ -12,8 +13,8 @@ import { GenericListDataService } from 'src/app/services/generic-list.service';
   styleUrls: ['./lista-progetti.component.css']
 })
 export class ListaProgettiComponent implements OnInit {
- 
-  displayedColumns: string[] = ['id', 'c_proj', 'd_proj', 'd_inizio'];
+
+  displayedColumns: string[] = ['id', 'codProgetto', 'descProgetto', 'dataInizio', 'dataFine', 'nomePM', 'effort'];
   data: Proj[] = [];
 
   resultsLength = 0;
@@ -23,26 +24,26 @@ export class ListaProgettiComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   private subscription: Subscription;
-  
+
   constructor(
-    private genericListDataService: GenericListDataService<ProjListItem>
+    private genericListDataService: GenericListDataService<ProjListItem>,
+    private searchService: SearchService
   ) {}
 
   ngOnInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    // TODO: Implementare test filtro
-    //this.bnlFilterService.onSearch.subscribe(() => this.paginator.pageIndex = 0);
 
-    this.subscription = merge(this.sort.sortChange, this.paginator.page) // , this.bnlFilterService.onSearch
+    this.searchService.onSearch.subscribe(() => this.paginator.pageIndex = 0);
+
+    this.subscription = merge(this.sort.sortChange, this.paginator.page, this.searchService.onSearch) // , this.bnlFilterService.onSearch
     .pipe(
       startWith({}),
       switchMap(() => {
-        const filterText: string = '';
-        return this.genericListDataService!.getList(
+        return this.genericListDataService.getList(
           'proj',
           this.paginator,
           this.sort,
-          filterText,
+          this.searchService.lastFilter,
            );
       }),
       map(data => {
@@ -56,5 +57,5 @@ export class ListaProgettiComponent implements OnInit {
   }
 
 
-  
+
 }

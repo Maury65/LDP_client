@@ -1,11 +1,11 @@
 export class Proj {
     id: number;
-    c_proj: String;
-    d_proj: String;
-    nome_pm: String;
+    codProgetto: String;
+    descProgetto: String;
+    nomePM: String;
     effort: number;
-    d_inizio: Date;
-    d_fine: Date;
+    dataInizio: Date;
+    dataFine: Date;
 }
 
 

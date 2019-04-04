@@ -3,3 +3,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.snackbar-background-error {
+  background-color: rgb(151, 21, 21) !important;
+}
+
+.snackbar-background-info {
+  background-color: rgb(2, 65, 2) !important;
+}
+

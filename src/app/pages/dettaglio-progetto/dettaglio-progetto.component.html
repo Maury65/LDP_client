@@ -1,54 +1,69 @@
 <div fxLayout="column">
-  <button (click)="salva()" class="favIcon" mat-fab aria-label="Salva il progetto">
+  <button (click)="save()" class="favIcon" mat-mini-fab aria-label="Salva il progetto">
     <mat-icon>save</mat-icon>
   </button>
-<!--
-  c_proj: String;
-  d_proj: String;
-  nome_pm: String;
-  effort: number;
-  d_inizio: Date;
-  d_fine: Date;
--->
   <form class="container" [formGroup]="formGroup">
-   
-    <table width="100%" cellspacing="10" cellpadding="0">
-      <tr>
-        <td>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Codice Progetto" formControlName="c_proj"  #c_proj />
-            <mat-error *ngIf="formGroup.get('c_proj').invalid && formGroup.get('c_proj').touched">
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="left center" fxLayoutGap="20px">
+        <div style="flex-grow: 2" >
+          <mat-form-field  class="full-width">
+            <input matInput placeholder="Codice Progetto" formControlName="codProgetto"  #codProgetto />
+            <mat-error *ngIf="formGroup.get('codProgetto').invalid && formGroup.get('codProgetto').touched">
               <span>Il Codice Progetto  è <strong>obbligatorio</strong></span>
             </mat-error>
           </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field class="full-width">
-              <input matInput placeholder="Descrizione Progetto" formControlName="d_proj"  #firstName/>
-              <mat-error *ngIf="formGroup.get('d_proj').invalid && formGroup.get('d_proj').touched">
-                <span>Il campo descrizione progetto è <strong>obbligatorio</strong></span>
-              </mat-error>
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Nome Capo Progetto" formControlName="nome_pm" #nome_pm />
-            <mat-error *ngIf="formGroup.get('nome_pm').invalid && formGroup.get('nome_pm').touched">
+        </div>
+        <div style="flex-grow: 4">
+          <mat-form-field  class="full-width">
+            <input matInput placeholder="Nome Capo Progetto" formControlName="nomePM" #nomePM />
+            <mat-error *ngIf="formGroup.get('nomePM').invalid && formGroup.get('nomePM').touched">
               <span>La Nome Project Manager <strong>obbligatorio</strong></span>
             </mat-error>
           </mat-form-field>
-        </td>
-      </tr>
-      <tr *ngIf="id">
-        <td colspan="2">
-            <div class="container"  fxLayout="row"  fxLayoutAlign="start start"  *ngIf="!isNew" >
-              <p class="actionLabel">Altre Azioni:</p>
-              <button mat-button (click)="delete()">[Elimina Progetto]</button>
-            </div>
-        </td>
-      </tr>
-    </table>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="left center" fxLayoutGap="20px">
+          <div style="flex-grow: 1">
+            <mat-form-field class="full-width-data">
+              <input  matInput [matDatepicker]="pickerInizio" placeholder="Data Inizio" formControlName="dataInizio" [formGroup]="formGroup" #dataInizio>
+              <mat-datepicker-toggle matSuffix [for]="pickerInizio"></mat-datepicker-toggle>
+              <mat-datepicker #pickerInizio></mat-datepicker>
+              <mat-error *ngIf="formGroup.get('dataInizio').invalid && formGroup.get('dataInizio').touched">
+                  <span>Il campo data inizio è <strong>obbligatorio</strong></span>
+              </mat-error>
+              <mat-hint> </mat-hint>
+            </mat-form-field>
+          </div>
+          <div style="flex-grow: 1">
+            <mat-form-field class="full-width-data">
+              <input  matInput [matDatepicker]="pickerFine" placeholder="Data Fine" formControlName="dataFine" [formGroup]="formGroup" #dataFine>
+              <mat-datepicker-toggle matSuffix [for]="pickerFine"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFine></mat-datepicker>
+              <mat-error *ngIf="formGroup.get('dataFine').invalid && formGroup.get('dataFine').touched">
+                  <span>Il campo data fine è <strong>obbligatorio</strong></span>
+              </mat-error>
+              <mat-hint> </mat-hint>
+            </mat-form-field>
+          </div>
+          <div style="flex-grow: 1">
+              <mat-form-field  class="number">
+                <input matInput type="number" placeholder="Effort" formControlName="effort"  #codProgetto />
+                <mat-error *ngIf="formGroup.get('effort').invalid && formGroup.get('effort').touched">
+                  <span>Il campo Effort  è <strong>obbligatorio</strong></span>
+                </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+      <mat-form-field class="full-width">
+        <textarea matInput mat-autosize placeholder="Descrizione Progetto"  formControlName="descProgetto"  #firstName></textarea>
+        <mat-error *ngIf="formGroup.get('descProgetto').invalid && formGroup.get('descProgetto').touched">
+          <span>Il campo descrizione progetto è <strong>obbligatorio</strong></span>
+        </mat-error>
+      </mat-form-field>
+      <div class="container"  fxLayout="row"  fxLayoutAlign="start start"  *ngIf="!isNew" >
+        <p class="actionLabel">Altre Azioni:</p>
+        <button mat-button (click)="delete()">[Elimina Progetto]</button>
+      </div>
+    </div>
   </form>
 </div>

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,5 @@ import { DataService } from './services/data.service';
 export class AppComponent {
   title = 'il-progetto-mio';
 
-  constructor(dataService: DataService) {
-    // dataService.getProjects();
-    // console.debug("ssss");
-
-  }
+  constructor() { }
 }

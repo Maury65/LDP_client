@@ -1,38 +1,56 @@
-<button class="favIcon" [routerLink]="[ '/home', 'add' ]" mat-fab aria-label="Aggiungi progetto">
+<button class="favIcon" [routerLink]="[ '/home', 'add' ]" mat-mini-fab aria-label="Aggiungi progetto">
   <mat-icon>add</mat-icon>
 </button>
 <div class="container"> <!--  mat-elevation-z8 -->
   <div class="table-container">
 
-    <table mat-table [dataSource]="data" class="table"
+    <table mat-table [dataSource]="data" matSort class="table"
            matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
       <!-- Number Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+        <th mat-header-cell *matHeaderCellDef fxShow.lt-md="false">#</th>
+        <td mat-cell *matCellDef="let row" fxShow.lt-md="false">{{row.id}}</td>
       </ng-container>
 
       <!-- Title Column -->
-      <ng-container matColumnDef="c_proj">
+      <ng-container matColumnDef="codProgetto">
         <th mat-header-cell mat-sort-header  *matHeaderCellDef>Codice Progetto</th>
-        <td mat-cell *matCellDef="let row">{{row.c_proj}}</td>
+        <td mat-cell *matCellDef="let row">{{row.codProgetto}}</td>
       </ng-container>
 
       <!-- State Column -->
-      <ng-container matColumnDef="d_proj">
+      <ng-container matColumnDef="descProgetto">
         <th mat-header-cell *matHeaderCellDef>Descrizione</th>
-        <td mat-cell *matCellDef="let row">{{row.d_proj}}</td>
+        <td mat-cell *matCellDef="let row">{{row.descProgetto}}</td>
       </ng-container>
 
       <!-- Created Column -->
-      <ng-container matColumnDef="d_inizio">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+      <ng-container matColumnDef="dataInizio" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxShow.lt-md="false">
           Data Inizio
         </th>
-        <td mat-cell *matCellDef="let row">{{row.d_inizio | date}}</td>
+        <td mat-cell *matCellDef="let row" fxShow.lt-md="false">{{row.dataInizio | date}}</td>
+      </ng-container>
+      <ng-container matColumnDef="dataFine" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxShow.lt-md="false">
+          Data Fine
+        </th>
+        <td mat-cell *matCellDef="let row" fxShow.lt-md="false">{{row.dataFine | date}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nomePM" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxShow.lt-md="false">
+          Capo progetto
+        </th>
+        <td mat-cell *matCellDef="let row" fxShow.lt-md="false">{{row.nomePM}}</td>
+      </ng-container>
+      <ng-container matColumnDef="effort" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxShow.lt-md="false">
+          Effort
+        </th>
+        <td mat-cell *matCellDef="let row" fxShow.lt-md="false">{{row.effort}}</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row class="row"  routerLink="{{'/home/' + row.id}}"  *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
