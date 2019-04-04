@@ -7,11 +7,10 @@ const routes: Routes =  [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: ListaProgettiComponent },
   { path: 'home/:idProgetto', component: DettaglioProgettoComponent },
-  /* { path: 'heroes', component: HeroesComponent } */
+         /* { path: 'heroes', component: HeroesComponent } */
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
 export class AppRoutingModule { }
